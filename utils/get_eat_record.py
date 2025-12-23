@@ -18,7 +18,7 @@ def decrypt_aes_ecb(encrypted_data: str) -> str:
 
 def get_record(servicehall, idserial):
     # 获取数据
-    url = f"https://card.tsinghua.edu.cn/business/querySelfTradeList?pageNumber=0&pageSize=5000&starttime=2024-01-01&endtime=2024-12-31&idserial={idserial}&tradetype=-1"
+    url = f"https://card.tsinghua.edu.cn/business/querySelfTradeList?pageNumber=0&pageSize=5000&starttime=2025-01-01&endtime=2025-12-31&idserial={idserial}&tradetype=-1"
     cookie = {"servicehall": servicehall}
     response = requests.post(url, cookies=cookie)
     

@@ -1,4 +1,4 @@
-# THU-2024-Food
+# THU-2025-Food
 
 一年过去了，你在华子食堂里花的钱都花在哪儿了？
 
@@ -58,8 +58,8 @@ streamlit run st.py
 
 2. 构建并运行：
 ```bash
-docker build -t thu2024-food .
-docker run -p 3000:3000 --env-file .env thu2024-food
+docker build -t thu202x-food .
+docker run -p 3000:3000 --env-file .env thu202x-food
 ```
 
 3. 设置环境变量：

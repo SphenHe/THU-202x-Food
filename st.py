@@ -20,7 +20,7 @@ from utils.prompts import get_eat_habbit_prompt
 from utils.ask_gpt import ask_gpt
 
 st.set_page_config(
-    page_title="2024 华子食堂消费总结",
+    page_title="2025 华子食堂消费总结",
     page_icon="🍜",
     layout="wide"
 )
@@ -100,23 +100,23 @@ def plot_merchant_spending(df_raw):
 
 def main():
     load_css()
-    st.title("🍜 2024 华子食堂消费总结")
+    st.title("🍜 2025 华子食堂消费总结")
     
     # 更新欢迎页面文案
     st.markdown("""
     
-    👋 这是一个专门为华子吃货们打造的 2024 年度美食档案！
+    👋 这是一个专门为华子吃货们打造的 2025 年度美食档案！
     """)
 
     # 更新用户输入区域文案
     with st.form("user_input"):
         st.subheader("🔑 请出示你的美食证件")
         idserial = st.text_input("学号")
-        servicehall = st.text_input("Cookie中的servicehall", help="如何获取？参考 https://github.com/Huanshere/THU-2024-Food")
+        servicehall = st.text_input("Cookie中的servicehall", help="如何获取？参考 https://github.com/Huanshere/THU-2025-Food")
         submitted = st.form_submit_button("开启美食档案 🚀")
 
         if TEST_MODE:
-            idserial = "2024012345"
+            idserial = "2025012345"
             servicehall = "1234567890"
             submitted = True
 
@@ -152,7 +152,7 @@ def main():
                         cups = int(total_cost // 13)
                         st.markdown("""
                             <div class='stat-card card-blue'>
-                                <div class='stat-label'>2024 一共吃了</div>
+                                <div class='stat-label'>2025 一共吃了</div>
                                 <div class='stat-value'>¥{total_cost:.2f}</div>
                                 <div class='stat-label'>相当于 {cups} 杯生椰拿铁 🥥</div>
                             </div>
