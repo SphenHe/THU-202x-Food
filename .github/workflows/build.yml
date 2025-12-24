@@ -1,0 +1,75 @@
+name: Build and Release
+
+on:
+  push:
+    branches: [ "main", "ci-build" ]
+    tags:
+      - 'v*'
+  pull_request:
+    branches: [ "main" ]
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: Build on ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.10'
+        cache: 'pip'
+        
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt
+        pip install pyinstaller
+        
+    - name: Build with PyInstaller
+      run: |
+        python build.py
+        
+    - name: Rename executable (Unix)
+      if: matrix.os != 'windows-latest'
+      run: |
+        mv dist/THU-Food-Summary dist/THU-Food-Summary-${{ matrix.os }}
+        
+    - name: Rename executable (Windows)
+      if: matrix.os == 'windows-latest'
+      run: |
+        mv dist/THU-Food-Summary.exe dist/THU-Food-Summary-${{ matrix.os }}.exe
+
+    - name: Upload Artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: THU-Food-Summary-${{ matrix.os }}
+        path: dist/THU-Food-Summary*
+
+  release:
+    needs: build
+    if: startsWith(github.ref, 'refs/tags/')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/download-artifact@v4
+        with:
+          path: artifacts
+          
+      - name: Display structure of downloaded files
+        run: ls -R artifacts
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            artifacts/**/*
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
