@@ -76,7 +76,10 @@ jobs:
       - name: Create Release
         uses: softprops/action-gh-release@v1
         with:
-          files: |
-            artifacts/**/*
+          tag: ${{ github.event.inputs.tag }}
+          name: ${{ github.event.inputs.release_name || github.event.inputs.tag }}
+          files: artifacts/**/*
+          draft: false
+          prerelease: ${{ github.event.inputs.prerelease }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
