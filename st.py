@@ -29,7 +29,7 @@ st.set_page_config(
 load_dotenv()
 
 # Get TEST_MODE from environment variables
-TEST_MODE = os.getenv('TEST_MODE', 'true').lower() == 'true'
+TEST_MODE = os.getenv('TEST_MODE', 'false').lower() == 'true'
 
 # 添加自定义 CSS 样式
 def load_css():
@@ -101,6 +101,13 @@ def plot_merchant_spending(df_raw):
 def main():
     load_css()
     st.title("🍜 2025 华子食堂消费总结")
+    
+    # Sidebar for configuration
+    with st.sidebar:
+        st.header("⚙️ LLM 设置")
+        base_url = st.text_input("Base URL", value=os.getenv("BASE_URL", "https://api.deepseek.com"))
+        model = st.text_input("Model", value=os.getenv("MODEL", "deepseek-chat"))
+        api_key = st.text_input("API Key", value=os.getenv("API_KEY", ""), type="password")
     
     # 更新欢迎页面文案
     st.markdown("""
@@ -211,9 +218,9 @@ def main():
                     latest_prompt = get_eat_habbit_prompt(username, latest)
                     most_expensive_prompt = get_eat_habbit_prompt(username, most_expensive)
                     
-                    earliest_comment = ask_gpt(earliest_prompt)
-                    latest_comment = ask_gpt(latest_prompt)
-                    most_expensive_comment = ask_gpt(most_expensive_prompt)
+                    earliest_comment = ask_gpt(earliest_prompt, model=model, api_key=api_key, base_url=base_url)
+                    latest_comment = ask_gpt(latest_prompt, model=model, api_key=api_key, base_url=base_url)
+                    most_expensive_comment = ask_gpt(most_expensive_prompt, model=model, api_key=api_key, base_url=base_url)
 
                     col1, col2, col3 = st.columns(3)
                     

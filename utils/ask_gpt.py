@@ -5,9 +5,15 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-def ask_gpt(prompt, model=None):
+def ask_gpt(prompt, model=None, api_key=None, base_url=None):
     if model is None:
         model = os.getenv('MODEL', 'gemini-2.0-flash-exp')
+    
+    if api_key is None:
+        api_key = os.getenv('API_KEY')
+        
+    if base_url is None:
+        base_url = os.getenv('BASE_URL')
 
     messages = [
         {"role": "user", "content": prompt},
@@ -15,8 +21,8 @@ def ask_gpt(prompt, model=None):
     
     try:
         client = OpenAI(
-            api_key=os.getenv('API_KEY'),
-            base_url=os.getenv('BASE_URL')
+            api_key=api_key,
+            base_url=base_url
         )
         response = client.chat.completions.create(
             model=model,
@@ -26,8 +32,8 @@ def ask_gpt(prompt, model=None):
         
     except Exception as e:
         print(f"❌ 请求失败！请检查以下配置：")
-        print(f"API Key: {os.getenv('API_KEY')}")
-        print(f"Base URL: {os.getenv('BASE_URL')}")
+        print(f"API Key: {api_key}")
+        print(f"Base URL: {base_url}")
         print(f"Model: {model}")
         print(f"错误信息: {str(e)}")
         raise e
