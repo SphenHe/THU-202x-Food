@@ -29,7 +29,7 @@ st.set_page_config(
 load_dotenv()
 
 # Get TEST_MODE from environment variables
-TEST_MODE = os.getenv('TEST_MODE', 'true').lower() == 'true'
+TEST_MODE = os.getenv('TEST_MODE', 'false').lower() == 'true'
 
 # 添加自定义 CSS 样式
 def load_css():
