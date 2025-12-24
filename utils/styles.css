@@ -1,10 +1,8 @@
-/* 基础容器样式 */
 .section-container {
     margin: 20px 0;
     padding: 15px;
 }
 
-/* 卡片网格布局 */
 .grid-container {
     display: flex;
     flex-wrap: wrap;
@@ -12,7 +10,6 @@
     margin-bottom: 24px;
 }
 
-/* 卡片基础样式 */
 .stat-card {
     background: hsl(0 0% 100%);
     border-radius: 8px;
@@ -23,12 +20,10 @@
     transition: background-color 0.15s ease;
 }
 
-/* 卡片悬停效果 */
 .stat-card:hover {
     background: hsl(0 0% 98%);
 }
 
-/* 移除所有彩色主题，统一使用黑白风格 */
 .card-blue,
 .card-green,
 .card-purple,
@@ -39,7 +34,6 @@
     border: 1px solid hsl(240 3.8% 93.9%);
 }
 
-/* 卡片内容样式 */
 .stat-value {
     font-size: 24px;
     font-weight: 500;
@@ -60,7 +54,6 @@
     font-weight: 500;
 }
 
-/* 响应式布局 */
 @media (max-width: 1200px) {
     .stat-card {
         min-width: calc(50% - 16px);
@@ -71,4 +64,4 @@
     .stat-card {
         min-width: 100%;
     }
-} 
+}
