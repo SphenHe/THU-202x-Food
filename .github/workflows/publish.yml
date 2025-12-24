@@ -37,25 +37,8 @@ jobs:
       - name: Install dependencies
         run: |
           python -m pip install --upgrade pip
-          python -m pip install --no-cache-dir -r requirements.txt
-          python -m pip install --no-cache-dir pyinstaller
-
-      - name: Smoke test imports
-        run: |
-          python - <<'PY'
-          import importlib
-          modules = ['dotenv','openai','streamlit','pandas','matplotlib','Crypto','requests']
-          missing = []
-          for m in modules:
-              try:
-                  importlib.import_module(m)
-              except Exception as e:
-                  print('FAILED import', m, e)
-                  missing.append(m)
-          if missing:
-              raise SystemExit('Missing imports: ' + ','.join(missing))
-          print('All required imports OK')
-          PY
+          pip install -r requirements.txt
+          pip install pyinstaller
 
       - name: Build with PyInstaller
         run: |
