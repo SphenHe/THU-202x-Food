@@ -47,7 +47,7 @@ pip install -r requirements.txt
 ```bash
 cp .env.example .env
 ```
-编辑 `.env` 文件，填入必要的 API 信息
+编辑 `.env` 文件，填入必要的 API 信息、BASE_URL 以及模型名称
 
 5. 运行应用：
 ```bash
@@ -68,7 +68,7 @@ docker run -p 3000:3000 --env-file .env thu202x-food
 ```bash
 cp .env.example .env
 ```
-编辑 `.env` 文件，填入必要的 API 信息
+编辑 `.env` 文件，填入必要的 API 信息、BASE_URL 以及模型名称
 
 4. 访问 http://localhost:3000 即可使用。
 

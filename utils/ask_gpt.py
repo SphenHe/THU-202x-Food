@@ -5,7 +5,10 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
-def ask_gpt(prompt, model='gemini-2.0-flash-exp'):
+def ask_gpt(prompt, model=None):
+    if model is None:
+        model = os.getenv('MODEL', 'gemini-2.0-flash-exp')
+
     messages = [
         {"role": "user", "content": prompt},
     ]
