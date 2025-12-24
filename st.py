@@ -1,5 +1,6 @@
 import json
 import os
+import sys
 import streamlit as st
 from dotenv import load_dotenv
 import matplotlib.pyplot as plt
@@ -33,8 +34,40 @@ TEST_MODE = os.getenv('TEST_MODE', 'false').lower() == 'true'
 
 # 添加自定义 CSS 样式
 def load_css():
-    with open('utils/styles.css') as f:
-        st.markdown(f'<style>{f.read()}</style>', unsafe_allow_html=True)
+    # Resolve path so it works when packaged with PyInstaller (sys._MEIPASS)
+    possible_paths = [
+        os.path.join(os.getcwd(), 'utils', 'styles.css'),
+        os.path.join(os.path.dirname(__file__), 'utils', 'styles.css'),
+    ]
+    if getattr(sys, 'frozen', False):
+        possible_paths.insert(0, os.path.join(sys._MEIPASS, 'utils', 'styles.css'))
+
+    css_text = None
+    for p in possible_paths:
+        try:
+            with open(p, 'r', encoding='utf-8') as f:
+                css_text = f.read()
+                break
+        except UnicodeDecodeError:
+            try:
+                with open(p, 'r', encoding='gbk') as f:
+                    css_text = f.read()
+                    break
+            except Exception:
+                try:
+                    with open(p, 'rb') as f:
+                        css_text = f.read().decode('utf-8', errors='replace')
+                        break
+                except Exception:
+                    continue
+        except FileNotFoundError:
+            continue
+
+    if css_text is None:
+        st.warning('无法读取样式文件 `utils/styles.css`，将使用默认样式。')
+        return
+
+    st.markdown(f'<style>{css_text}</style>', unsafe_allow_html=True)
 
 def create_stat_card(title, value, location, date, comment, emoji=""):
     return f"""
