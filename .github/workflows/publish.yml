@@ -73,13 +73,13 @@ jobs:
       - name: Show downloaded files
         run: ls -R artifacts
 
-      - name: Create Release
-        uses: softprops/action-gh-release@v1
+      - name: Create GitHub Release and upload files
+        uses: ncipollo/release-action@v1
         with:
           tag: ${{ github.event.inputs.tag }}
           name: ${{ github.event.inputs.release_name || github.event.inputs.tag }}
-          files: artifacts/**/*
-          draft: false
+          artifacts: artifacts/**/*
+          draft: ${{ github.event.inputs.prerelease == 'true' && 'true' || 'false' }}
           prerelease: ${{ github.event.inputs.prerelease }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
