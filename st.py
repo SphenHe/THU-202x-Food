@@ -65,9 +65,9 @@ def plot_merchant_spending(df_raw):
         except FileNotFoundError:
             st.warning("未找到apt-get命令，请手动安装fonts-noto-cjk包。")
         
-        plt.rcParams['font.sans-serif'] = ['Noto Sans CJK JP', 'Noto Sans CJK SC', 'Noto Sans CJK TC']
+        plt.rcParams['font.sans-serif'] = ['Noto Sans CJK JP', 'Noto Sans CJK SC', 'Noto Sans CJK TC', 'SimHei', 'SimSun', 'WenQuanYi Micro Hei', 'FangSong_GB2312', 'KaiTi_GB2312']
     else:  # Windows
-        plt.rcParams['font.sans-serif'] = ['SimHei']
+        plt.rcParams['font.sans-serif'] = ['SimHei', 'SimSun']
     plt.rcParams['axes.unicode_minus'] = False
 
     # Create high-resolution figure
