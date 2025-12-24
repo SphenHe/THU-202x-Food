@@ -6,7 +6,13 @@
 
 > 本项目 Fork 自 [leverimmy/THU-Annual-Eat](https://github.com/leverimmy/THU-Annual-Eat) 与 [Huanshere/THU-2024-Food](https://github.com/Huanshere/THU-2024-Food)。[Huanshere/THU-2024-Food](https://github.com/Huanshere/THU-2024-Food) 部署了 SaaS 在线版本，并加入了详细的分析。
 >
-> 本人只对年份进行了更新，以及修改了自动筛选匹配的关键词，以尝试提取出所有食堂用餐数据。由于清华校园卡疑似对 cookies 的源 ip 有较强的绑定，同时为了确保数据安全，在此**只建议本地部署**。
+> 本人只对年份进行了更新，以及修改了自动筛选匹配的关键词，以尝试提取出所有食堂用餐数据。由于清华校园卡疑似对 cookies 的源 ip 有较强的绑定，同时为了确保数据安全，在此只建议**使用 [Release](https://github.com/SphenHe/THU-202x-Food/releases) 中打包好的版本**或者**自行本地部署**。
+>
+> 打包好的版本如下:
+>
+> - [Windows](https://github.com/SphenHe/THU-202x-Food/releases/latest/download/THU-Food-Summary-windows-latest.exe)
+> - [MacOS](https://github.com/SphenHe/THU-202x-Food/releases/latest/download/THU-Food-Summary-macos-latest)
+> - [Linux(Ubuntu)](https://github.com/SphenHe/THU-202x-Food/releases/latest/download/THU-Food-Summary-ubuntu-latest)。
 
 本项目是一个用于统计华清大学学生在食堂（和宿舍）的消费情况的可视化工具。通过模拟登录华清大学校园卡网站，获取学生在华子食堂的消费记录，并通过数据可视化的方式展示。
 
