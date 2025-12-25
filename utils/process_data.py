@@ -12,7 +12,7 @@ def process_data(data):
         'mername': row['mername'],
         'username': row['username']
     } for row in data['resultData']['rows'] 
-        if 'mername' in row and row['summary'] in ['持卡人消费', '实体卡', '离线码在线消费']]
+        if 'mername' in row and row['summary'] in ['持卡人消费', '实体卡', '离线码在线消费', 'nfc卡消费']]
     # Convert to DataFrame and save raw data
     df = pd.DataFrame(all_data)
     
