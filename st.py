@@ -174,7 +174,7 @@ def main():
                     username = df['username'].iloc[0]
                     st.success("✅ 数据获取成功")
                 except Exception as e:
-                    st.error(f"❌ 数据获取失败，���检查学号和Cookie是否正确")
+                    st.error(f"❌ 数据获取失败，请检查学号和 Cookie 是否正确，并确认 Cookies 是在本电脑上获取的（而不是来自其他同学的设备）")
                     return
 
     if submitted:
@@ -251,9 +251,21 @@ def main():
                     latest_prompt = get_eat_habbit_prompt(username, latest)
                     most_expensive_prompt = get_eat_habbit_prompt(username, most_expensive)
                     
-                    earliest_comment = ask_gpt(earliest_prompt, model=model, api_key=api_key, base_url=base_url)
-                    latest_comment = ask_gpt(latest_prompt, model=model, api_key=api_key, base_url=base_url)
-                    most_expensive_comment = ask_gpt(most_expensive_prompt, model=model, api_key=api_key, base_url=base_url)
+                    try:
+                        earliest_comment = ask_gpt(earliest_prompt, model=model, api_key=api_key, base_url=base_url)
+                        latest_comment = ask_gpt(latest_prompt, model=model, api_key=api_key, base_url=base_url)
+                        most_expensive_comment = ask_gpt(most_expensive_prompt, model=model, api_key=api_key, base_url=base_url)
+                    except Exception as e:
+                        st.error(
+                            "❌ 调用 AI 失败，请检查侧边栏的设置并重试，这可能是由于以下原因之一：\n\n"
+                            "1. API Key 不正确或已过期（一般为 `sk-*****` 的形式）\n"
+                            "2. Base URL 配置错误（一般为 `https://api.deepseek.com` 的形式）\n"
+                            "3. 模型名称错误或不可用（一般为 `deepseek-chat` 的形式）\n\n"
+                            f"错误信息: {str(e)}"
+                        )
+                        earliest_comment = "无法生成评论"
+                        latest_comment = "无法生成评论"
+                        most_expensive_comment = "无法生成评论"
 
                     col1, col2, col3 = st.columns(3)
                     
