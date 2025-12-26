@@ -98,17 +98,17 @@ def plot_merchant_spending(df_raw):
         except FileNotFoundError:
             st.warning("未找到apt-get命令，请手动安装fonts-noto-cjk包。")
         
-        plt.rcParams['font.sans-serif'] = ['Noto Sans CJK JP', 'Noto Sans CJK SC', 'Noto Sans CJK TC', 'SimHei', 'SimSun', 'WenQuanYi Micro Hei', 'FangSong_GB2312', 'KaiTi_GB2312']
+        plt.rcParams['font.sans-serif'] = ['Noto Sans CJK JP', 'Noto Sans CJK SC', 'Noto Sans CJK TC', 'DengXian', 'SimHei', 'SimSun', 'WenQuanYi Micro Hei', 'FangSong_GB2312', 'KaiTi_GB2312']
     else:  # Windows
-        plt.rcParams['font.sans-serif'] = ['SimHei', 'SimSun']
+        plt.rcParams['font.sans-serif'] = ['Microsoft YaHei', 'DengXian', 'SimSun', 'SimHei', 'KaiTi', 'FangSong']
     plt.rcParams['axes.unicode_minus'] = False
 
     # Create high-resolution figure
-    plt.figure(figsize=(12, len(merchant_spending) / 66 * 18), dpi=300)
+    plt.figure(figsize=(12, len(merchant_spending) / 66 * 18), dpi=500)
     
     # Set higher quality settings
-    plt.rcParams['figure.dpi'] = 300
-    plt.rcParams['savefig.dpi'] = 300
+    plt.rcParams['figure.dpi'] = 500
+    plt.rcParams['savefig.dpi'] = 500
     plt.rcParams['figure.figsize'] = [12, len(merchant_spending) / 66 * 18]
     plt.rcParams['figure.autolayout'] = True
     
