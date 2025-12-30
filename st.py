@@ -19,6 +19,7 @@ from utils.get_eat_record import get_record
 from utils.process_data import process_data
 from utils.prompts import get_eat_habbit_prompt
 from utils.ask_gpt import ask_gpt
+from utils.bonus import get_shower_stats, get_card_stats
 
 st.set_page_config(
     page_title="2025 华子食堂消费总结",
@@ -172,6 +173,8 @@ def main():
                     data = get_record(servicehall, idserial) if not TEST_MODE else json.load(open("log.json", "r", encoding='utf-8'))
                     df_raw, df = process_data(data)
                     username = df['username'].iloc[0]
+                    shower_stats = get_shower_stats(data)
+                    card_stats = get_card_stats(data)
                     st.success("✅ 数据获取成功")
                 except Exception as e:
                     st.error(f"❌ 数据获取失败，请检查学号和 Cookie 是否正确，并确认 Cookies 是在本电脑上获取的（而不是来自其他同学的设备）")
@@ -308,6 +311,46 @@ def main():
                             unsafe_allow_html=True
                         )
                     st.markdown("", unsafe_allow_html=True)
+
+                    # 4.5 Bonus 区域：洗澡/补卡，保持与逆天卡片相似的风格
+                    with st.expander("🎁 Bonus", expanded=False):
+                        col1, col2 = st.columns(2)
+
+                        with col1:
+                            st.markdown(
+                                """
+                                <div class='stat-card'>
+                                    <div class='stat-label'>洗澡大王 🛁</div>
+                                    <div class='stat-value'>总金额: ¥{amount:.2f}</div>
+                                    <div class='stat-label'>共计洗澡 {count} 次，平均每次 ¥{avg_amount:.2f}</div>
+                                    <div class='stat-label'>按水价为 ¥0.04 /磅计算，折合共计用开水 {weight_lb:.2f} 磅，每次洗澡用开水 {avg_weight_lb:.2f} 磅</div>
+                                </div>
+                                """.format(
+                                    count=shower_stats.get("count", 0),
+                                    amount=shower_stats.get("amount", 0.0),
+                                    avg_amount=shower_stats.get("avg_amount", 0.0),
+                                    weight_lb=shower_stats.get("weight_lb", 0.0),
+                                    avg_weight_lb=shower_stats.get("avg_weight_lb", 0.0),
+                                ),
+                                unsafe_allow_html=True,
+                            )
+
+                        with col2:
+                            st.markdown(
+                                """
+                                <div class='stat-card'>
+                                    <div class='stat-label'>补卡大王 💳</div>
+                                    <div class='stat-value'>{count} 次</div>
+                                    <div class='stat-label'>总金额: ¥{amount:.2f}</div>
+                                    <div class='stat-label'>{message}</div>
+                                </div>
+                                """.format(
+                                    count=card_stats.get("count", 0),
+                                    amount=card_stats.get("amount", 0.0),
+                                    message=card_stats.get("message", "校园卡补办消费"),
+                                ),
+                                unsafe_allow_html=True,
+                            )
 
                     # Add this section where you want to display the plot
                     st.subheader("💰 细细细则")
